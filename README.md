@@ -1,5 +1,6 @@
-# IndecisionApp
+# ExpensifyApp
 React App
+using React, Redux, Jest and Firebase
 
 
-http://indecision-startae14.surge.sh/
+http://expensify-startae14.surge.sh/
