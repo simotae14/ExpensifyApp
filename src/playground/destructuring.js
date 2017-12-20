@@ -1,3 +1,5 @@
+// ES6 Object Destructuring
+
 const persona = {
   nome: 'Simone',
   eta: 27,
@@ -29,3 +31,25 @@ const { name: publisherName = 'Self-Published' } = book.publisher
 
 
 console.log(publisherName); // Penguin , Self-Published
+
+// ES6 Array Destructuring
+const indirizzo = [
+  '1299 S Juniper Street',
+  'Philadelphia',
+  'Pennsylvania',
+  '19147'
+];
+
+const [, cittaInd, stato] = indirizzo;
+
+console.log(`Tu sei in ${cittaInd} ${stato}.`);
+
+const item = [
+  'Coffee (iced)',
+  '$3.00',
+  '$3.50',
+  '$3.75'
+];
+
+const [ product, , price ] = item;
+console.log(`A medium ${product} costs ${price}`);
