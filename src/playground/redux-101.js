@@ -20,8 +20,11 @@ const setCount = ({ count }) => ({
   count
 });
 
+// Reducers
+// 1. i Reducers sono FUNZIONI PURE
+// 2. NON CAMBIARE MAI LO STATE I L'ACTION
 
-const store = createStore((state = {count : 0}, action) => {
+const countReducer = (state = {count : 0}, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return {
@@ -42,7 +45,10 @@ const store = createStore((state = {count : 0}, action) => {
     default:
       return state;
   }
-});
+};
+
+
+const store = createStore(countReducer);
 
 const unsubscribe = store.subscribe(() => {
   console.log(store.getState());  
