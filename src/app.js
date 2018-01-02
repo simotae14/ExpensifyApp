@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { aggiungiSpesa } from './actions/expenses';
@@ -26,9 +27,21 @@ store.dispatch(
 // console.log(speseVisibili);
 
 store.dispatch(setTestoFiltro('acqua'));
+
+// vediamo come il valore di store viene automaticamente refreshiato dal connect
+setTimeout(() => {
+  store.dispatch(setTestoFiltro('affitto'));
+}, 3000);
+
 const state = store.getState();
 const speseVisibili = getSpeseVisibili(state.spese, state.filtri);
 console.log(speseVisibili);
 
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+);
+
 // renderizzare il Component
-ReactDOM.render(<AppRouter />, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));
