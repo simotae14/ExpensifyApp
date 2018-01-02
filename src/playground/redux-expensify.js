@@ -158,6 +158,14 @@ const getSpeseVisibili = (
     const testoMatch = spesa.descrizione.toLowerCase().includes(testo.toLowerCase());
 
     return dataInizioMatch && dataFineMatch && testoMatch;
+  }).sort((a, b) => {
+    // se ordino per data
+    if(ordinatoPer === 'data') {
+      return a.creataAlle < b.creataAlle ? 1 : -1;
+    // se ordino per importo
+    } else if(ordinatoPer === 'importo') {
+      return a.importo < b.importo ? 1 : -1;
+    }
   });
 };
 
@@ -181,7 +189,7 @@ const spesaUno = store.dispatch(
   aggiungiSpesa({ descrizione: "Affitto", importo: 100, creataAlle: 1000 })
 );
 const spesaDue = store.dispatch(
-  aggiungiSpesa({ descrizione: "Caffé", importo: 300, creataAlle: -1000 })
+  aggiungiSpesa({ descrizione: "Caffé", importo: 300, creataAlle: -21000 })
 );
 
 // store.dispatch(rimuoviSpesa({ id: spesaUno.spesa.id }));
@@ -190,12 +198,12 @@ const spesaDue = store.dispatch(
 // store.dispatch(modificaSpesa(spesaDue.spesa.id, { importo: 500 }));
 
 // modifico il testo del filtro di ricerca
-store.dispatch(setTestoFiltro('ff'));
+// store.dispatch(setTestoFiltro('ff'));
 // // modifico il testo del filtro di ricerca
 // store.dispatch(setTestoFiltro());
 
 // // modifico ordinamento per importo
-// store.dispatch(ordinatoPerImporto());
+store.dispatch(ordinatoPerImporto());
 // // modifico ordinamento per data
 // store.dispatch(ordinatoPerData());
 
