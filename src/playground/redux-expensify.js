@@ -7,7 +7,7 @@ const aggiungiSpesa = (
     { 
       descrizione = '', 
       note = '', 
-      quantita = 0, 
+      importo = 0, 
       creataAlle = 0 
     } = {}
   ) => ({
@@ -16,7 +16,7 @@ const aggiungiSpesa = (
     id: uuid(),
     descrizione,
     note,
-    quantita,
+    importo,
     creataAlle
   }
 });
@@ -40,10 +40,27 @@ const setTestoFiltro = (testo = '') => ({
   testo
 });
 
-// SORT_BY_DATE
-// SORT_BY_AMOUNT
-// SET_START_DATE
+// ORDINATO_PER_DATA
+const ordinatoPerData = () => ({
+  type: 'ORDINATO_PER_DATA'
+});
+
+// ORDINATO_PER_IMPORTO
+const ordinatoPerImporto = () => ({
+  type: 'ORDINATO_PER_IMPORTO'
+});
+
+// SET_DATA_INIZIO
+const setDataInizio = (dataInizio) => ({
+  type: 'SET_DATA_INIZIO',
+  dataInizio
+});
+
 // SET_END_DATE
+const setDataFine = (dataFine) => ({
+  type: 'SET_DATA_FINE',
+  dataFine
+});
 
 const speseReducerDefaultState = [];
 
@@ -95,6 +112,30 @@ const filtriReducer = (state = filtriReducerDefaultState, action) => {
         ...state,
         testo: action.testo
       };
+    // caso ordinato per importo
+    case 'ORDINATO_PER_IMPORTO':
+      return {
+        ...state,
+        ordinatoPer: 'importo'
+      };
+    // caso ordinato per data
+    case 'ORDINATO_PER_DATA':
+      return {
+        ...state,
+        ordinatoPer: 'data'
+      };
+    // caso imposta data inizio
+    case 'SET_DATA_INIZIO':
+      return {
+        ...state,
+        dataInizio: action.dataInizio
+      };
+    // caso imposta data fine
+    case 'SET_DATA_FINE':
+      return {
+        ...state,
+        dataInizio: action.dataFine
+      };
     // caso default
     default:
       return state;
@@ -114,18 +155,31 @@ store.subscribe(() => {
 });
 
 // invoco il metodo addExpense
-const spesaUno = store.dispatch(aggiungiSpesa({ descrizione: 'Affitto', quantita: 100}));
-const spesaDue = store.dispatch(aggiungiSpesa({ descrizione: 'Caffé', quantita: 300}));
+// const spesaUno = store.dispatch(aggiungiSpesa({ descrizione: 'Affitto', importo: 100}));
+// const spesaDue = store.dispatch(aggiungiSpesa({ descrizione: 'Caffé', importo: 300}));
 
-store.dispatch(rimuoviSpesa({ id: spesaUno.spesa.id }));
+// store.dispatch(rimuoviSpesa({ id: spesaUno.spesa.id }));
 
-// modifico la seconda spesa
-store.dispatch(modificaSpesa(spesaDue.spesa.id, { quantita: 500 }));
+// // modifico la seconda spesa
+// store.dispatch(modificaSpesa(spesaDue.spesa.id, { importo: 500 }));
 
-// modifico il testo del filtro di ricerca
-store.dispatch(setTestoFiltro('affitto'));
-// modifico il testo del filtro di ricerca
-store.dispatch(setTestoFiltro());
+// // modifico il testo del filtro di ricerca
+// store.dispatch(setTestoFiltro('affitto'));
+// // modifico il testo del filtro di ricerca
+// store.dispatch(setTestoFiltro());
+
+// // modifico ordinamento per importo
+// store.dispatch(ordinatoPerImporto());
+// // modifico ordinamento per data
+// store.dispatch(ordinatoPerData());
+
+// setto la data di Inizio
+store.dispatch(setDataInizio(125));
+store.dispatch(setDataInizio());
+
+// setto la data di Fine
+store.dispatch(setDataFine(1250));
+
 
 // oggetto di cui vogliamo tenere traccia
 const demoState = {
@@ -133,28 +187,28 @@ const demoState = {
     id: 'jakljkljkaldjk',
     descrizione: 'January Rent',
     note: 'This was the final payment for that address',
-    quantita: 54500,
+    importo: 54500,
     creataAlle: 0
   }],
   // filters cui do un nome e un valore
   // posso settare anche un range
   filtri: {
     testo: 'affitto',
-    ordinatoPer: 'quantita', // per date o amount
+    ordinatoPer: 'importo', // per data o importo
     dataInizio: undefined,
     dataFine: undefined
   }
 };
 
-const utente = {
-  nome: 'Jen',
-  eta: 24
-};
+// const utente = {
+//   nome: 'Jen',
+//   eta: 24
+// };
 
-console.log(
-  {
-    eta: 27,
-    ...utente,
-    luogo: 'Philadelphia'
-  }
-);
+// console.log(
+//   {
+//     eta: 27,
+//     ...utente,
+//     luogo: 'Philadelphia'
+//   }
+// );
