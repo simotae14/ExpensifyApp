@@ -3,7 +3,7 @@ import React from 'react';
 const EditExpensePage = (props) => {
   return (
     <div>
-      Editing the expense with id of {props.match.params.id}
+      Modifica la spesa con id {props.match.params.id}
     </div>
   );
 };

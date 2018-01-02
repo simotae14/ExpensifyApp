@@ -2,7 +2,7 @@ import React from 'react';
 
 const ExpenseDashboardPage = () => (
   <div>
-    This is from my dashboard Component!
+    Questo dal Component dashboard!
   </div>
 );
 
