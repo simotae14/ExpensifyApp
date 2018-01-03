@@ -13,7 +13,7 @@ const store = configureStore();
 
 // aggiungiSpesa -> Bolletta Acqua
 store.dispatch(
-  aggiungiSpesa({ descrizione: "Bolletta Acqua" })
+  aggiungiSpesa({ descrizione: "Bolletta Acqua", importo: 4500 })
 );
 // aggiungiSpesa -> Bolletta Gas
 store.dispatch(
@@ -30,7 +30,7 @@ store.dispatch(setTestoFiltro('acqua'));
 
 // vediamo come il valore di store viene automaticamente refreshiato dal connect
 setTimeout(() => {
-  store.dispatch(setTestoFiltro('affitto'));
+  store.dispatch(setTestoFiltro('bolletta'));
 }, 3000);
 
 const state = store.getState();
