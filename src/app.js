@@ -17,21 +17,12 @@ store.dispatch(
 );
 // aggiungiSpesa -> Bolletta Gas
 store.dispatch(
-  aggiungiSpesa({ descrizione: "Bolletta Gas" })
+  aggiungiSpesa({ descrizione: "Bolletta Gas", creataAlle: 1000 })
 );
-// setTestoFiltro -> bolletta (2 elementi) -> acqua (1 elemento)
-// store.dispatch(setTestoFiltro('bolletta'));
-// // const getSpeseVisibili -> stampo a video solo quelle visibili
-// const state = store.getState();
-// const speseVisibili = getSpeseVisibili(state.spese, state.filtri);
-// console.log(speseVisibili);
-
-store.dispatch(setTestoFiltro('acqua'));
-
-// vediamo come il valore di store viene automaticamente refreshiato dal connect
-setTimeout(() => {
-  store.dispatch(setTestoFiltro('bolletta'));
-}, 3000);
+// aggiungiSpesa -> Bolletta Acqua
+store.dispatch(
+  aggiungiSpesa({ descrizione: "Affitto", importo: 109500 })
+);
 
 const state = store.getState();
 const speseVisibili = getSpeseVisibili(state.spese, state.filtri);
