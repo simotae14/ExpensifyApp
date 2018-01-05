@@ -1,11 +1,21 @@
 import React from 'react';
+import moment from 'moment';
+// importo il Date-Picker
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+
+// creo una nuova data
+const adesso = moment();
+console.log(adesso.format('MMM Do, YYYY '));
 
 export default class ExpenseForm extends React.Component {
   // setto lo State iniziale
   state = {
     descrizione: '',
     note: '',
-    importo: ''
+    importo: '',
+    creataAlle: moment(),
+    calendarioFocused: false
   };
   // funzione che modifica la descrizione
   onDescriptionChange = (e) => {
@@ -30,6 +40,18 @@ export default class ExpenseForm extends React.Component {
       }));  
     }
   };
+  // funzione che gestisce il cambio data
+  onDateChange = (creataAlle) => {
+    this.setState(() => ({
+      creataAlle
+    }));
+  };
+  // se lo stato del DatePicker cambia
+  onFocusChange = ( {focused} ) => {
+    this.setState(() => ({
+      calendarioFocused: focused
+    }));
+  };
   render() {
     return (
       <div>
@@ -46,6 +68,14 @@ export default class ExpenseForm extends React.Component {
             placeholder="Importo"
             value={this.state.importo}
             onChange={this.onAmountChange}
+          />
+          <SingleDatePicker 
+            date={this.state.creataAlle}
+            onDateChange={this.onDateChange}
+            focused={this.state.calendarioFocused}
+            onFocusChange={this.onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
           />
           <textarea
             placeholder="Aggiungi una nota della tua spesa (opzionale)"
