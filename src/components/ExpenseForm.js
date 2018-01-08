@@ -15,7 +15,8 @@ export default class ExpenseForm extends React.Component {
     note: '',
     importo: '',
     creataAlle: moment(),
-    calendarioFocused: false
+    calendarioFocused: false,
+    errore: ''
   };
   // funzione che modifica la descrizione
   onDescriptionChange = (e) => {
@@ -34,7 +35,7 @@ export default class ExpenseForm extends React.Component {
   // funzione che modifica la funzione
   onAmountChange = (e) => {
     const importo = e.target.value;
-    if(importo.match(/^\d*(\.\d{0,2})?$/)) {
+    if(!importo || importo.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState(() => ({
         importo
       }));  
@@ -42,9 +43,11 @@ export default class ExpenseForm extends React.Component {
   };
   // funzione che gestisce il cambio data
   onDateChange = (creataAlle) => {
-    this.setState(() => ({
-      creataAlle
-    }));
+    if(creataAlle) {
+      this.setState(() => ({
+        creataAlle
+      }));
+    }
   };
   // se lo stato del DatePicker cambia
   onFocusChange = ( {focused} ) => {
@@ -52,10 +55,34 @@ export default class ExpenseForm extends React.Component {
       calendarioFocused: focused
     }));
   };
+  // handler al Submit
+  onSubmit = (e) => {
+    // evito di farlo refreshare
+    e.preventDefault();
+    
+    if(!this.state.descrizione || !this.state.importo) {
+      // settare lo stato errore uguale a "Per favore, inserire Descrizione e Importo."
+      this.setState(() => ({
+        errore: "Per favore, inserire Descrizione e Importo."
+      }));
+    } else {
+      this.setState(() => ({
+        errore: ""
+      }));
+      // invoco il metodo padre per salvare i contenuti
+      this.props.onSubmit({
+        descrizione: this.state.descrizione,
+        importo: parseFloat(this.state.importo, 10) * 100,
+        creataAlle: this.state.creataAlle.valueOf(),
+        note: this.state.note
+      });
+    }
+  };
   render() {
     return (
       <div>
-        <form>
+        {this.state.errore && <p>{this.state.errore}</p>}
+        <form onSubmit={this.onSubmit}>
           <input 
             type="text" 
             placeholder="Descrizione"
