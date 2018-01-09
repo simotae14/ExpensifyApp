@@ -1,20 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { rimuoviSpesa } from '../actions/expenses';
+import { Link } from 'react-router-dom';
 
 // creo un component Stateless Functional che mostra elenco delle Spese
-const ExpenseListItem = ({ dispatch, id, descrizione, importo, creataAlle }) => (
+const ExpenseListItem = ({ id, descrizione, importo, creataAlle }) => (
   <div>
-    <h3>
-      {descrizione}
-    </h3>
+    <Link to={`/edit/${id}`}>
+      <h3>
+        {descrizione}
+      </h3>  
+    </Link>
     <p>
       {importo} - {creataAlle}
     </p>
-    <button onClick={() => {
-      dispatch(rimuoviSpesa({ id }));
-    }} >Rimuovi</button>
   </div>
 );
 
-export default connect()(ExpenseListItem);
+export default ExpenseListItem;

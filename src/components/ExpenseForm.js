@@ -4,20 +4,21 @@ import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
-// creo una nuova data
-const adesso = moment();
-console.log(adesso.format('MMM Do, YYYY '));
-
 export default class ExpenseForm extends React.Component {
+  // Definisco il constructor
+  constructor(props) {
+    super(props);
   // setto lo State iniziale
-  state = {
-    descrizione: '',
-    note: '',
-    importo: '',
-    creataAlle: moment(),
-    calendarioFocused: false,
-    errore: ''
-  };
+    this.state = {
+      descrizione: props.spesa ? props.spesa.descrizione : '',
+      note: props.spesa ? props.spesa.note : '',
+      importo: props.spesa ? (props.spesa.importo / 100).toString() : '',
+      creataAlle: props.spesa ?  moment(props.spesa.creataAlle) : moment(),
+      calendarioFocused: false,
+      errore: ''
+    };
+  }
+    
   // funzione che modifica la descrizione
   onDescriptionChange = (e) => {
     const descrizione = e.target.value;
