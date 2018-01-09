@@ -1,8 +1,10 @@
+import moment from 'moment';
+
 const filtriReducerDefaultState = {
   testo: "",
   ordinatoPer: "data",
-  dataInizio: undefined,
-  dataFine: undefined
+  dataInizio: moment().startOf('month'),
+  dataFine: moment().endOf('month')
 };
 
 // Reducer per Filters
@@ -37,7 +39,7 @@ export default (state = filtriReducerDefaultState, action) => {
     case "SET_DATA_FINE":
       return {
         ...state,
-        dataInizio: action.dataFine
+        dataFine: action.dataFine
       };
     // caso default
     default:
